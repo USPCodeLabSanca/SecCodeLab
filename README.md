@@ -2,52 +2,38 @@
 <!-- Ao longo do documento, algumas partes estarão comentadas e podem ser utilizadas opcionalmente. -->
 
 <!-- Se o projeto tiver uma logo, pode ser interessante colocá-la aqui. -->
-# Nome do Projeto
+# SecCodeLab
 
 <!-- Descreva brevemente o objetivo do projeto, será a primeira parte lida ao entrar no repositório. -->
 <!-- Links essenciais (como onde o projeto está sendo hospedado se for web) podem ficar aqui também. -->
 ## 🧪 Sobre o Projeto
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel ullamcorper nisi. Pellentesque luctus laoreet blandit. Fusce massa est, fermentum sit amet aliquet ut, viverra ut neque. Suspendisse in justo et nunc lacinia vehicula. Aliquam condimentum eros sit amet nulla auctor, non vestibulum dui volutpat. Donec vestibulum placerat consectetur. Quisque imperdiet faucibus lacus, ut fringilla neque bibendum vitae.
 
-<!-- Essa seção pode ser usada para detalhar de forma mais técnica os processos empregados no projeto. -->
+O projeto visa desenvolver uma aplicação que ensine boas práticas de segurança da informação no desenvolvimento de websites, com infraestrutrura para que aqueles que acessarem a aplicação possam não só aprender a teorica como aplicar na prática seus conhecimentos.
+
+Para isso, o desenvolvimento do projeto contemplará três módulos:
+
+1. **Página principal:** Aplicação que acumulará os artigos que expliquem vulnerabilidades famosas teoricamente, onde elas surgem em código. Também devem disponibilizar o link para a aplicação de teste vulnerável e como corrigir o problema em código.
+
+2. **Aplicações vulneráveis:** Seguem cada artigo, servindo de exercício prático para o usuário aprender a como impedir a vulnerabilidade abordada. Elas devem ser pensadas para serem independentes entre si, e facilmente instanciávies por um usuário em sua máquina local. Sua única dependencia é capza de ser testável pela API MALICIOSA.
+
+3. **API maliciosa:** Api em que cada rota serve para desenvolver uma comunicação com um aplicação vulnerável com o objetivo de testar se a vulnerabilidade daquela aplicação ainda existe.
+
 ## ⚙️ Tecnologias Utilizadas
-Lorem ipsum dolor sit amet, consectetur adipiscing elit: 
-- Pellentesque
-- Vel
-- Ullamcorper
 
-Pellentesque luctus laoreet blandit. Fusce massa est, fermentum sit amet aliquet ut, viverra ut neque. Suspendisse in justo et nunc lacinia vehicula. Aliquam condimentum eros sit amet nulla auctor, non vestibulum dui volutpat. Donec vestibulum placerat consectetur. Quisque imperdiet faucibus lacus, ut fringilla neque bibendum vitae.
+Cada módulo usa tecnologias que mais satisfazem seus requisitos: 
+- **Página principal:** Usa React.js na arquitetura SPA com artigos escritos em Markdown
+- **API Maliciosa:** Feita em GO.
+- **Aplicações vulneráveis:** Variam entre diferentes stacks e arquiteturas que melhor correspondam a vulnerabilidade. Porém todas devem ser isoladas por um container docker.
 
-<!-- Descreva em detalhes como fazer o projeto rodar localmente, incluindo as depedências que devem ser instaladas. -->
-<!-- É interessante utilizar blocos de código nessa seção para mostrar os comandos que devem ser executados. -->
+
 ## 📝 Como Rodar
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel ullamcorper nisi. Pellentesque luctus laoreet blandit. Fusce massa est, fermentum sit amet aliquet ut, viverra ut neque:
-```javascript
-let lorem = "ipsum"
-let dolor = "sit amet"
-```
-Quisque imperdiet faucibus lacus, ut fringilla neque bibendum vitae.
 
-<!-- Descreva o processo de contribuir para o projeto: issues, pull requests, etc... -->
-<!-- Para projetos maiores, é interessante ter linkado aqui um documento de contribuição com ainda mais detalhes. -->
-<!--
+  A definir...
+
 ## 🤝 Como Contribuir
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque vel ullamcorper nisi. Pellentesque luctus laoreet blandit. Fusce massa est, fermentum sit amet aliquet ut, viverra ut neque.
--->
 
-<!-- Imagens do projeto rodando ou de gráficos que expliquem seu funcionamento podem ser anexados aqui. -->
-<!-- As imagens podem estar hospedadas no próprio projeto. -->
-<!--
-## 📷 Screenshots
-<img src="https://github.com/USPCodeLabSanca/Site-USPCodeLab/blob/938f77ae42d295c8856ea90fb1ed78616badd1d8/frontend/src/assets/logos/logo.png" alt="Imagem de Exemplo" width="738">
--->
+  A definir...
 
-<!-- Em alguns casos, é interessante ter um email ou telegram de contato para o projeto. Geralmente do líder do projeto. -->
-<!--
 ## ☎️ Contato
-**Email:** user@email.com
 
-**Telegram:** @user
--->
-
-
+  A definir...

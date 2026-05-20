@@ -1,4 +1,4 @@
-# Frontend
+# Frontend da aplicação
 
 ## Rodando localmente
 
