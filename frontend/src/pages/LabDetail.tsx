@@ -8,8 +8,19 @@ import { Badge } from "@/components/ui/badge";
 
 const LabDetail = () => {
   const { slug } = useParams();
-  const { vulnerabilities } = useVulnerabilities();
+  const { vulnerabilities, isLoading } = useVulnerabilities();
   const vulnerability = vulnerabilities.find((v) => v.slug === slug);
+
+  if (!vulnerability && isLoading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <Header />
+        <div className="container mx-auto px-4 py-20 text-center">
+          <h1 className="text-2xl font-mono text-foreground mb-4">Carregando conteúdo...</h1>
+        </div>
+      </div>
+    );
+  }
 
   if (!vulnerability) {
     return (

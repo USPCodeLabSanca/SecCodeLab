@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link } from "react-router-dom";
-import { ArrowLeft, Plus, Trash2, FlaskConical } from "lucide-react";
+import { ArrowLeft, Plus, Trash2, FlaskConical, Pencil, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -20,7 +20,7 @@ import { toast } from "@/hooks/use-toast";
 const ICONS = ["🔥", "💉", "🎭", "🔓", "⚡", "🐛", "🕷️", "💀", "🛡️", "⚠️"];
 
 const Admin = () => {
-  const { vulnerabilities, add, remove, isCustom } = useVulnerabilities();
+  const { vulnerabilities, add, remove, update, isCustom, isSaving } = useVulnerabilities();
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
@@ -30,11 +30,36 @@ const Admin = () => {
   const [content, setContent] = useState("");
   const [labFileName, setLabFileName] = useState("");
   const [labZipUrl, setLabZipUrl] = useState("");
+  const [editingId, setEditingId] = useState<string | null>(null);
 
   const generateSlug = (t: string) =>
     t.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "");
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const resetForm = () => {
+    setTitle("");
+    setCategory("");
+    setDifficulty("iniciante");
+    setIcon("🔥");
+    setDescription("");
+    setContent("");
+    setLabFileName("");
+    setLabZipUrl("");
+    setEditingId(null);
+  };
+
+  const startEditing = (vulnerability: Vulnerability) => {
+    setTitle(vulnerability.title);
+    setCategory(vulnerability.category);
+    setDifficulty(vulnerability.difficulty);
+    setIcon(vulnerability.icon);
+    setDescription(vulnerability.description);
+    setContent(vulnerability.content);
+    setLabFileName(vulnerability.labFileName);
+    setLabZipUrl(vulnerability.labZipUrl);
+    setEditingId(vulnerability.id);
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     if (!title || !description || !content) {
@@ -42,28 +67,46 @@ const Admin = () => {
       return;
     }
 
-    const newVuln: Vulnerability = {
-      id: crypto.randomUUID(),
+    const slug = generateSlug(title);
+    const vulnerabilityPayload: Vulnerability = {
+      id: editingId ?? crypto.randomUUID(),
       title,
-      slug: generateSlug(title),
+      slug,
       category: category || "Geral",
       difficulty,
       icon,
       description,
       content,
-      labFileName: labFileName || `lab-${generateSlug(title)}.zip`,
+      labFileName: labFileName || `lab-${slug}.zip`,
       labZipUrl,
     };
 
-    add(newVuln);
-    toast({ title: "Aula adicionada com sucesso!" });
+    const slugAlreadyExists = vulnerabilities.some(
+      (item) => item.slug === vulnerabilityPayload.slug && item.id !== vulnerabilityPayload.id,
+    );
 
-    setTitle("");
-    setCategory("");
-    setDescription("");
-    setContent("");
-    setLabFileName("");
-    setLabZipUrl("");
+    if (slugAlreadyExists) {
+      toast({ title: "Já existe uma aula com esse título", variant: "destructive" });
+      return;
+    }
+
+    try {
+      if (editingId) {
+        await update(vulnerabilityPayload);
+        toast({ title: "Aula atualizada com sucesso!" });
+      } else {
+        await add(vulnerabilityPayload);
+        toast({ title: "Aula adicionada com sucesso!" });
+      }
+    } catch (error) {
+      toast({
+        title: error instanceof Error ? error.message : "Não foi possível salvar a aula",
+        variant: "destructive",
+      });
+      return;
+    }
+
+    resetForm();
   };
 
   return (
@@ -82,14 +125,21 @@ const Admin = () => {
           <span className="text-primary">Admin</span> — Gerenciar Aulas
         </h1>
         <p className="text-muted-foreground mb-10">
-          Adicione novas vulnerabilidades e laboratórios ao secCodeLab.
+          Adicione, edite e remova aulas personalizadas do secCodeLab.
         </p>
 
         <form onSubmit={handleSubmit} className="space-y-6 mb-16">
           <div className="rounded-lg border border-border bg-card p-6 space-y-5">
             <h2 className="font-mono text-lg font-semibold text-foreground flex items-center gap-2">
-              <Plus className="h-5 w-5 text-primary" /> Nova Aula
+              {editingId ? <Pencil className="h-5 w-5 text-primary" /> : <Plus className="h-5 w-5 text-primary" />}
+              {editingId ? "Editar Aula" : "Nova Aula"}
             </h2>
+
+            {editingId && (
+              <div className="rounded-md border border-primary/30 bg-primary/5 px-4 py-3 text-sm text-muted-foreground">
+                Você está editando uma aula personalizada. As alterações serão salvas no arquivo JSON.
+              </div>
+            )}
 
             <div className="grid gap-4 md:grid-cols-2">
               <div className="space-y-2">
@@ -164,9 +214,23 @@ const Admin = () => {
               </div>
             </div>
 
-            <Button type="submit" className="w-full gap-2">
-              <Plus className="h-4 w-4" /> Adicionar Aula
-            </Button>
+            <div className="flex flex-col gap-3 sm:flex-row">
+              <Button type="submit" className="flex-1 gap-2" disabled={isSaving}>
+                {editingId ? <Pencil className="h-4 w-4" /> : <Plus className="h-4 w-4" />}
+                {editingId ? "Salvar alterações" : "Adicionar Aula"}
+              </Button>
+              {editingId && (
+                <Button
+                  type="button"
+                  variant="outline"
+                  className="gap-2"
+                  onClick={resetForm}
+                  disabled={isSaving}
+                >
+                  <X className="h-4 w-4" /> Cancelar edição
+                </Button>
+              )}
+            </div>
           </div>
         </form>
 
@@ -194,9 +258,39 @@ const Admin = () => {
                     <Button variant="ghost" size="sm" className="text-muted-foreground hover:text-primary">Ver</Button>
                   </Link>
                   {isCustom(v.id) && (
-                    <Button variant="ghost" size="sm" onClick={() => remove(v.id)} className="text-muted-foreground hover:text-destructive">
-                      <Trash2 className="h-4 w-4" />
-                    </Button>
+                    <>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={() => startEditing(v)}
+                        className="text-muted-foreground hover:text-primary"
+                        disabled={isSaving}
+                      >
+                        <Pencil className="h-4 w-4" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="sm"
+                        onClick={async () => {
+                          try {
+                            await remove(v.id);
+                            if (editingId === v.id) {
+                              resetForm();
+                            }
+                            toast({ title: "Aula removida com sucesso!" });
+                          } catch (error) {
+                            toast({
+                              title: error instanceof Error ? error.message : "Não foi possível remover a aula",
+                              variant: "destructive",
+                            });
+                          }
+                        }}
+                        className="text-muted-foreground hover:text-destructive"
+                        disabled={isSaving}
+                      >
+                        <Trash2 className="h-4 w-4" />
+                      </Button>
+                    </>
                   )}
                 </div>
               </div>
