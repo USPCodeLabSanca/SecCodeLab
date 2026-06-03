@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <title>Avatar Lab</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="container">
+      <h1>Avatar Lab</h1>
+
+      <section id="login-section">
+        <h2>Login</h2>
+        <form id="login-form">
+          <label>
+            Usuario
+            <input name="username" value="alice" required />
+          </label>
+          <label>
+            Senha
+            <input name="password" type="password" value="1234" required />
+          </label>
+          <button type="submit">Entrar</button>
+        </form>
+        <p class="hint">Contas de teste: alice / 1234 &nbsp;|&nbsp; bob / hunter2</p>
+        <p id="login-error" class="error"></p>
+      </section>
+
+      <section id="avatar-section" hidden>
+        <div class="avatar-header">
+          <h2>Meu avatar</h2>
+          <button id="logout" type="button" class="link-button">Sair</button>
+        </div>
+        <table id="avatar-view"></table>
+
+        <h3>Editar</h3>
+        <form id="edit-form">
+          <label>Nome <input name="name" /></label>
+          <label>Idade <input name="age" type="number" /></label>
+          <label>Cor da pele <input name="skinColor" /></label>
+          <label>Animal favorito <input name="favoriteAnimal" /></label>
+          <button type="submit">Salvar</button>
+        </form>
+
+        <hr />
+
+        <h3>Teste do laboratorio</h3>
+        <p>
+          Roda automaticamente o ataque contra a API local e diz se a
+          vulnerabilidade ainda esta presente.
+        </p>
+        <button id="run-test">Rodar teste</button>
+        <pre id="test-output"></pre>
+      </section>
+    </main>
+
+    <script src="app.js"></script>
+  </body>
+</html>
