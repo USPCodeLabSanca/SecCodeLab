@@ -6,7 +6,7 @@ import { fileURLToPath } from "node:url";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-const DATA_FILE = path.resolve(__dirname, "../data/custom-vulnerabilities.json");
+const DATA_FILE = path.resolve(__dirname, "../public/custom-vulnerabilities.json");
 const PORT = Number(process.env.PORT ?? 3001);
 
 function sendJson(res, statusCode, payload) {

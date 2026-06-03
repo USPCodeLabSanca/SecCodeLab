@@ -1,6 +1,9 @@
 import type { Vulnerability } from "@/data/vulnerabilities";
 
 const API_BASE = "/api/vulnerabilities";
+// Leitura via arquivo estatico (funciona no Vercel, sem backend). As escritas
+// continuam indo para API_BASE, que so existe localmente (server/api.mjs).
+const STATIC_DATA_URL = "/custom-vulnerabilities.json";
 
 async function parseResponse<T>(response: Response): Promise<T> {
   if (!response.ok) {
@@ -17,7 +20,7 @@ async function parseResponse<T>(response: Response): Promise<T> {
 }
 
 export async function fetchCustomVulnerabilities() {
-  const response = await fetch(API_BASE);
+  const response = await fetch(STATIC_DATA_URL, { cache: "no-cache" });
   return parseResponse<Vulnerability[]>(response);
 }
 
