@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Livraria Segura — SQL Injection Lab</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="page">
+      <header class="header">
+        <div class="brand">
+          <span class="brand-icon">📚</span>
+          <div>
+            <h1>Livraria Segura</h1>
+            <p class="tagline">Laboratorio de SQL Injection</p>
+          </div>
+        </div>
+      </header>
+
+      <main class="main">
+        <section id="login-section" class="card">
+          <h2>Entrar na loja</h2>
+          <p class="subtitle">
+            Faca login para acessar o catalogo e gerenciar sua conta.
+          </p>
+          <form id="login-form" class="form">
+            <label>
+              Usuario
+              <input name="username" value="visitante" autocomplete="username" required />
+            </label>
+            <label>
+              Senha
+              <input name="password" type="password" value="senha123" autocomplete="current-password" required />
+            </label>
+            <button type="submit" class="btn btn-primary">Entrar</button>
+          </form>
+          <p class="hint">
+            Conta de teste: <code>visitante</code> / <code>senha123</code>
+          </p>
+          <p id="login-error" class="error" hidden></p>
+        </section>
+
+        <section id="dashboard-section" class="dashboard" hidden>
+          <div class="card welcome-card">
+            <div class="welcome-header">
+              <div>
+                <h2>Bem-vindo, <span id="user-name"></span></h2>
+                <p class="subtitle">Voce esta logado como <strong id="user-username"></strong></p>
+              </div>
+              <span id="role-badge" class="badge"></span>
+            </div>
+            <button id="logout" type="button" class="btn btn-ghost">Sair</button>
+          </div>
+
+          <div class="card">
+            <h3>Catalogo</h3>
+            <p class="subtitle">Busque livros pelo titulo.</p>
+            <form id="search-form" class="search-form">
+              <input
+                name="q"
+                type="search"
+                placeholder="Ex: 1984, Clean Code..."
+                autocomplete="off"
+              />
+              <button type="submit" class="btn btn-primary">Buscar</button>
+            </form>
+            <div id="products" class="products"></div>
+          </div>
+
+          <div class="card lab-card">
+            <h3>Teste do laboratorio</h3>
+            <p class="subtitle">
+              Roda automaticamente um ataque de SQL injection no login e verifica
+              se ainda e possivel entrar como admin sem a senha correta.
+            </p>
+            <button id="run-test" type="button" class="btn btn-accent">Rodar teste</button>
+            <pre id="test-output" class="test-output" hidden></pre>
+          </div>
+        </section>
+      </main>
+
+      <footer class="footer">
+        <p>SecCodeLab — ambiente educacional. Nao use em producao.</p>
+      </footer>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
