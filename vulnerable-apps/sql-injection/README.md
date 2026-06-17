@@ -16,6 +16,8 @@ Contas de teste:
 - visitante / senha123   (usuario comum)
 - admin     / supersecreta (administrador — tente acessar sem a senha correta)
 
+  **Observação:** Após as correções do código, é necessário apagar as imagens docker do lab com `docker rmi <id_da_imagem_do_app>`. Do contrário, sua mudança não terá efeito!
+
 ## Objetivo
 
 1. Logar como `visitante` e explorar o catalogo de livros.
@@ -37,7 +39,7 @@ Contas de teste:
 6. Reiniciar o container (`docker compose up --build`) e rodar o teste
    novamente. Quando o teste reportar `[SEGURO]`, o desafio esta completo.
 
-## Dica de correcao
+## Dica de correção
 
 Em vez de interpolar valores na string SQL, use placeholders `$1`, `$2`:
 

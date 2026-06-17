@@ -18,6 +18,8 @@ Contas de teste:
 - bob   / hunter2         (usuario comum)
 - root  / verylongpassword (admin)
 
+  **Observação:** Após as correções do código, é necessário apagar as imagens docker do lab com `docker rmi <id_da_imagem_do_app>`. Do contrário, sua mudança não terá efeito!
+
 ## Objetivo
 
 1. Logar como `alice` e observar que `GET /users/:id` devolve o campo
@@ -30,7 +32,7 @@ Contas de teste:
 4. Reiniciar o container (`docker compose up --build`) e rodar o teste
    novamente. Quando o teste reportar `[SEGURO]`, o desafio esta completo.
 
-## Dica de correcao
+## Dica de correção
 
 Em vez de iterar sobre `req.body` inteiro, extraia apenas os campos
 permitidos:
