@@ -151,7 +151,7 @@ db.query("SELECT * FROM users WHERE id = ?", [userId]);
 
 No laboratório, você encontrará uma aplicação com uma vulnerabilidade de SQL Injection. Corrija-a usando prepared statements.`,
     labFileName: "lab-sql-injection.zip",
-    labZipUrl: "",
+    labZipUrl: "/labs/lab-sql-injection.zip",
   },
   {
     id: "3",

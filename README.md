@@ -22,9 +22,8 @@ Para isso, o desenvolvimento do projeto contemplará três módulos:
 
 Cada módulo usa tecnologias que mais satisfazem seus requisitos: 
 - **Página principal:** Usa React.js na arquitetura SPA com artigos escritos em Markdown
-- **API Maliciosa:** Feita em GO.
+- **API Maliciosa:** Feita em GO & Js.
 - **Aplicações vulneráveis:** Variam entre diferentes stacks e arquiteturas que melhor correspondam a vulnerabilidade. Porém todas devem ser isoladas por um container docker.
-
 
 ## 📝 Como Rodar
 
